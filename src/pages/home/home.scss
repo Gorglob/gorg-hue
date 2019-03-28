@@ -1,3 +1,23 @@
 page-home {
+    .title {
+        display: flex;
+        align-items: center;
 
+        ion-label {
+            padding-left : 10px;
+        }
+    }
+    .light-params-container {
+        display: flex;
+
+        .light-param {
+            display: flex;
+            align-items: center;
+            
+            &.full-width {
+                display: block;
+                flex: 1;                
+            }
+        }
+    }
 }

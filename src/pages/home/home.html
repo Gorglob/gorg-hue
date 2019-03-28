@@ -1,14 +1,36 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="dark">
     <ion-title>
-      Ionic Blank
+      Gorglob HUE
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <ion-searchbar [(ngModel)]="searchLight" (ionInput)="filterLight($event)" placeholder="Rechercher une lampe" debounce="1000"></ion-searchbar>
+  <ng-container *ngFor="let light of Lights">
+    <ion-card  color="dark" *ngIf="light && light.value && light.value.state.reachable || true">
+      <ion-card-header>
+        <div class="title">
+          <ion-icon color="primary" name="bulb"></ion-icon>
+          <ion-label>{{light.value.name}}</ion-label>
+          <ion-toggle slot="end" [(ngModel)]="light.value.state.on" (ionChange)="switchOnOff(light)"></ion-toggle>
+        </div>
+      </ion-card-header>
+  
+      <ion-list>
+        <ion-item>
+          <ion-icon item-start name="color-palette"></ion-icon>
+          <ion-toggle item-start [(ngModel)]="light.colorloop" (ionChange)="colorCycle(light)"></ion-toggle>
+          <ion-range [(ngModel)]="light.value.state.bri" min="1" max="254" debounce="1000" (ionChange)="changeBri(light)"
+            [disabled]="!light.value.state.on">
+            <ion-icon range-left small name="sunny"></ion-icon>
+            <ion-icon range-right name="sunny"></ion-icon>
+          </ion-range>
+          <!-- <ion-icon color="medium" name="information-circle" (click)="getLight(light)" item-end></ion-icon>         -->
+        </ion-item>
+      </ion-list>      
+    </ion-card>
+    <!-- <p>{{ light.value.state | json}}</p> -->
+  </ng-container>
 </ion-content>
